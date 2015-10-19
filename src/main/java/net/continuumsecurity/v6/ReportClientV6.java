@@ -9,6 +9,7 @@ import javax.ws.rs.client.WebTarget;
 import net.continuumsecurity.ReportClient;
 import net.continuumsecurity.v5.model.Issue;
 import net.continuumsecurity.v6.model.HostV6;
+import net.continuumsecurity.v6.model.InfoV6;
 import net.continuumsecurity.v6.model.Plugin;
 import net.continuumsecurity.v6.model.ReportV6;
 import net.continuumsecurity.v6.model.Vulnerability;
@@ -39,7 +40,8 @@ public class ReportClientV6 extends SessionClientV6 implements ReportClient {
 	}
 
 	public HostV6 getHostDetails(int scanId, int hostId) {
-		WebTarget reportTarget = target.path("scans").path(Integer.toString(scanId)).path("hosts").path(Integer.toString(hostId));
+		WebTarget reportTarget = target.path("scans").path(Integer.toString(scanId)).path("hosts")
+				.path(Integer.toString(hostId));
 		return getRequest(reportTarget, HostV6.class);
 	}
 
@@ -49,7 +51,11 @@ public class ReportClientV6 extends SessionClientV6 implements ReportClient {
 			for(Vulnerability vuln : getVulnerabilities(scanId, host.getHostId())){
 				Issue issue = issues.get(vuln.getPluginId());
 				if(issue == null){
+					InfoV6 infoV6 = getPluginInfoV6(scanId, host.getHostId(), vuln.getPluginId());
 					issue = vuln.toIssue(nessusUrl, scanId);
+					issue.setSolution(infoV6.getPlugindescription().getPluginattributes().getSolution());
+					issue.setSynopsis(infoV6.getPlugindescription().getPluginattributes().getSynopsis());
+					issue.setDescription(infoV6.getPlugindescription().getPluginattributes().getDescription());
 					issues.put(vuln.getPluginId(), issue);
 				}
 				issue.getHostsV6().add(host);
@@ -57,5 +63,11 @@ public class ReportClientV6 extends SessionClientV6 implements ReportClient {
 			}
 		}
 		return issues;
+	}
+
+	public InfoV6 getPluginInfoV6(String scanId, int hostId, int pluginId) {
+		WebTarget reportTarget = target.path("scans").path(scanId).path("hosts").path(Integer.toString(hostId))
+				.path("plugins").path(Integer.toString(pluginId));
+		return getRequest(reportTarget, InfoV6.class);
 	}
 }
