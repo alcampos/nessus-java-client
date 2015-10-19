@@ -12,4 +12,8 @@ public class PluginOutput {
 	public InfoV6 getInfo() {
 		return info;
 	}
+	
+	public void setInfo(InfoV6 info) {
+		this.info = info;
+	}
 }
