@@ -8,17 +8,18 @@ import net.continuumsecurity.v6.model.HostV6;
  * Created by stephen on 23/02/2014.
  */
 public class Issue {
-	private int				pluginID;
-	private int				port;
-	private int				severity;
-	private String			protocol;
-	private List<HostV6>	hostsV6;
-	private List<String>	hostnames;
-	private String			description;
-	private String			solution;
-	private String			output;
-	private String			synopsis;
-	private String			nessusUrl, scanId;
+	private int pluginID;
+	private int port;
+	private int severity;
+	private String protocol;
+	private List<HostV6> hostsV6;
+	private List<String> hostnames;
+	private String description;
+	private String solution;
+	private String output;
+	private String synopsis;
+	private String nessusUrl, scanId;
+	private double cvss_score;
 
 	public Issue(String nessusUrl, String scanId) {
 		this.nessusUrl = nessusUrl;
@@ -33,7 +34,7 @@ public class Issue {
 		this.pluginName = pluginName;
 	}
 
-	private String	pluginName;
+	private String pluginName;
 
 	public int getPluginID() {
 		return pluginID;
@@ -117,19 +118,30 @@ public class Issue {
 
 	public String buildV6Url(HostV6 hostV6) {
 		StringBuilder sb = new StringBuilder();
-		return sb.append(nessusUrl + "/nessus6.html#/scans/").append(scanId).append("/hosts/").append(hostV6.getHostId()).append("/vulnerabilities/").append(pluginID).toString();
+		return sb.append(nessusUrl + "/nessus6.html#/scans/").append(scanId).append("/hosts/")
+				.append(hostV6.getHostId()).append("/vulnerabilities/").append(pluginID).toString();
+	}
+
+	public double getCvss_score() {
+		return cvss_score;
+	}
+
+	public void setCvss_score(double cvss_score) {
+		this.cvss_score = cvss_score;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder().append("ID: ").append(pluginID).append("\n").append("Name: ").append(pluginName).append("\n").append("Description: ").append(description).append("\n").append("Severity: ").append(severity).append("\n").append("Hosts:\n");
-		if(hostsV6 != null){
-			for(HostV6 hostV6 : getHostsV6()){
+		StringBuilder sb = new StringBuilder().append("ID: ").append(pluginID).append("\n").append("Name: ")
+				.append(pluginName).append("\n").append("Description: ").append(description).append("\n")
+				.append("Severity: ").append(severity).append("\n").append("Hosts:\n");
+		if (hostsV6 != null) {
+			for (HostV6 hostV6 : getHostsV6()) {
 				sb.append("\t\t" + hostV6.getHostname() + "\n");
 				sb.append("\t\tUrl: " + buildV6Url(hostV6) + "\n");
 			}
-		}else{
-			for(String hostname : getHostnames()){
+		} else {
+			for (String hostname : getHostnames()) {
 				sb.append("\t\t" + hostname + "\n");
 			}
 		}

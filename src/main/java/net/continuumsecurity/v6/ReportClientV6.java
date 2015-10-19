@@ -59,6 +59,7 @@ public class ReportClientV6 extends SessionClientV6 implements ReportClient {
 					issue.setSolution(pluginAttributes.getSolution());
 					issue.setSynopsis(pluginAttributes.getSynopsis());
 					issue.setDescription(pluginAttributes.getDescription());
+					issue.setCvss_score(pluginAttributes.getRiskinformation().getCvss_base_score());
 					issues.put(vuln.getPluginId(), issue);
 				}
 				issue.getHostsV6().add(host);

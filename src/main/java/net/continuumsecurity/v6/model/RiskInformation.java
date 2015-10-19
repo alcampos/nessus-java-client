@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class RiskInformation {
 	private String risk_factor;
 	private String cvss_vector;
-	private String cvss_base_score;
+	private double cvss_base_score;
 
 	public String getRisk_factor() {
 		return risk_factor;
@@ -27,11 +27,11 @@ public class RiskInformation {
 		this.cvss_vector = cvss_vector;
 	}
 
-	public String getCvss_base_score() {
+	public double getCvss_base_score() {
 		return cvss_base_score;
 	}
 
-	public void setCvss_base_score(String cvss_base_score) {
+	public void setCvss_base_score(double cvss_base_score) {
 		this.cvss_base_score = cvss_base_score;
 	}
 
