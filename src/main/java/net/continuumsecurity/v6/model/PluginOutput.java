@@ -1,5 +1,6 @@
 package net.continuumsecurity.v6.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,5 +27,13 @@ public class PluginOutput {
 
 	public void setOutputs(List<Output> outputs) {
 		this.outputs = outputs;
+	}
+
+	public List<String> getPorts() {
+		final List<String> ports = new ArrayList<String>();
+		for (Output output : outputs) {
+			ports.addAll(output.getPorts().keySet());
+		}
+		return ports;
 	}
 }

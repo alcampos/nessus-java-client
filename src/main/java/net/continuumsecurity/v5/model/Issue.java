@@ -20,6 +20,7 @@ public class Issue {
 	private String synopsis;
 	private String nessusUrl, scanId;
 	private double cvss_score;
+	private List<String> ports;
 
 	public Issue(String nessusUrl, String scanId) {
 		this.nessusUrl = nessusUrl;
@@ -128,6 +129,14 @@ public class Issue {
 
 	public void setCvss_score(double cvss_score) {
 		this.cvss_score = cvss_score;
+	}
+
+	public List<String> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(List<String> ports) {
+		this.ports = ports;
 	}
 
 	@Override
