@@ -32,7 +32,7 @@ public class PluginOutput {
 	public List<String> getPorts() {
 		final List<String> ports = new ArrayList<String>();
 		for (Output output : outputs) {
-			ports.addAll(output.getPorts().keySet());
+			ports.addAll(output.getPorts().get().keySet());
 		}
 		return ports;
 	}

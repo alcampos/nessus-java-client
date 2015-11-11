@@ -1,27 +1,29 @@
 package net.continuumsecurity.v6.model;
 
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by alcampos on 19/10/15.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+ @JsonIgnoreProperties(ignoreUnknown = true)
 public class Output {
 
-	private Map<String, String> ports;
 	private String has_attachment;
 	private String custom_description;
 	private String plugin_output;
 	private String severity;
+	private Port ports;
+
+	public void setPorts(Port ports) {
+		this.ports = ports;
+	}
+
+	public Port getPorts() {
+		return ports;
+	}
 
 	public void setPlugin_output(String plugin_output) {
 		this.plugin_output = plugin_output;
-	}
-
-	public void setPorts(Map<String, String> ports) {
-		this.ports = ports;
 	}
 
 	public void setHas_attachment(String has_attachment) {
@@ -46,10 +48,6 @@ public class Output {
 
 	public String getPlugin_output() {
 		return plugin_output;
-	}
-
-	public Map<String, String> getPorts() {
-		return ports;
 	}
 
 	public String getSeverity() {
